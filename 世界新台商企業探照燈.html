@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商周 × 白馬AI｜世界新台商企業探照燈</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C8960C;
+      --gold-light: #F0C040;
+      --navy: #0A1628;
+      --navy-mid: #112240;
+      --navy-soft: #1A3357;
+      --slate: #8892B0;
+      --light: #CCD6F6;
+      --white: #E6F1FF;
+      --accent: #64FFDA;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+      background: var(--navy);
+      color: var(--light);
+      line-height: 1.7;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 24px;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 60%, #1a3357 0%, var(--navy) 70%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(200,150,12,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(100,255,218,0.05) 0%, transparent 50%);
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 span { color: var(--gold-light); }
+
+    .hero .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--slate);
+      max-width: 640px;
+      margin: 0 auto 36px;
+    }
+
+    .hero .tagline {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: var(--accent);
+      font-style: italic;
+      max-width: 700px;
+      margin: 0 auto 48px;
+      padding: 16px 24px;
+      border-left: 3px solid var(--accent);
+      text-align: left;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--slate);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .scroll-hint::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--slate), transparent);
+    }
+
+    /* ── LAYOUT ── */
+    section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: var(--white);
+      margin-bottom: 36px;
+      position: relative;
+    }
+
+    h2::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 3px;
+      background: var(--gold);
+      margin-top: 12px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--gold-light);
+      margin-bottom: 10px;
+    }
+
+    p { color: var(--slate); margin-bottom: 14px; font-size: 0.97rem; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--navy-soft), transparent);
+      margin: 0 24px;
+    }
+
+    /* ── CARDS GRID ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--navy-mid);
+      border: 1px solid var(--navy-soft);
+      border-radius: 12px;
+      padding: 28px 24px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+    }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: var(--navy-soft);
+      color: var(--gold-light);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 11px 16px;
+      color: var(--slate);
+      border-bottom: 1px solid rgba(100,120,180,0.15);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.03); }
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; padding-left: 32px; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--gold), var(--accent));
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--navy);
+    }
+
+    .tl-phase {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .tl-title {
+      font-size: 1.05rem;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    /* ── VALUE BLOCKS ── */
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .value-block {
+      background: var(--navy-mid);
+      border-radius: 10px;
+      padding: 24px;
+      border-top: 3px solid var(--gold);
+    }
+
+    .value-block.accent-top { border-top-color: var(--accent); }
+
+    /* ── REVENUE TABLE ── */
+    .revenue-scenarios {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .scenario {
+      border-radius: 10px;
+      padding: 24px 20px;
+      text-align: center;
+      border: 1px solid;
+    }
+
+    .scenario.conservative { border-color: var(--slate); background: rgba(136,146,176,0.07); }
+    .scenario.base { border-color: var(--gold); background: rgba(200,150,12,0.08); }
+    .scenario.optimistic { border-color: var(--accent); background: rgba(100,255,218,0.06); }
+
+    .scenario-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .conservative .scenario-label { color: var(--slate); }
+    .base .scenario-label { color: var(--gold); }
+    .optimistic .scenario-label { color: var(--accent); }
+
+    .scenario-amount {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .scenario-desc {
+      font-size: 0.8rem;
+      color: var(--slate);
+      margin-top: 6px;
+    }
+
+    /* ── HIGHLIGHT QUOTE ── */
+    .highlight-quote {
+      background: linear-gradient(135deg, rgba(200,150,12,0.1), rgba(100,255,218,0.05));
+      border-left: 4px solid var(--gold);
+      border-radius: 0 10px 10px 0;
+      padding: 24px 28px;
+      margin: 32px 0;
+    }
+    .highlight-quote p {
+      color: var(--white);
+      font-size: 1.05rem;
+      font-style: italic;
+      margin: 0;
+    }
+
+    /* ── STEPS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .step {
+      background: var(--navy-mid);
+      border-radius: 10px;
+      padding: 24px;
+      position: relative;
+    }
+
+    .step-num {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: rgba(200,150,12,0.2);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .step h3 { color: var(--white); font-size: 1rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-mid);
+      border-top: 1px solid var(--navy-soft);
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--slate);
+      font-size: 0.85rem;
+    }
+
+    footer strong { color: var(--gold-light); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .revenue-scenarios { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div class="badge">2026 共創計劃提案書</div>
+  <h1>商周 × 白馬AI<br><span>世界新台商企業探照燈</span></h1>
+  <p class="subtitle">以 AI 的速度，商周的深度，讓台灣企業的故事在全球被找到</p>
+  <blockquote class="tagline">
+    「用 AI 內容生成技術，為台灣企業打造專屬的數位履歷與品牌故事，在商周域名下集結成一座動態的台商企業知識庫。」
+  </blockquote>
+  <div class="scroll-hint">向下探索</div>
+</header>
+
+<!-- ═══ BACKGROUND ═══ -->
+<section id="background">
+  <div class="section-label">時代背景</div>
+  <h2>三個關鍵洞察</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">📰</div>
+      <h3>商周 2000 期里程碑</h3>
+      <p>2026年3月12日，商業周刊邁入第2000期，橫跨三十餘年記錄台灣產業起伏。這是啟動新時代內容服務的天然錨點，也是向台灣產業生態發出的全新邀請。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌏</div>
+      <h3>台商數位能見度危機</h3>
+      <p>台灣優質企業——尤其是中小型——在數位世界幾乎是隱形的。官網陳舊、搜尋排名低落、英語內容缺乏，使品牌能見度遠落後於實際產業地位。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <h3>AI 搜尋時代的媒體優勢</h3>
+      <p>進入 AEO 時代，Google AI Overview、ChatGPT Search、Perplexity 高度仰賴權威媒體域名作為引用來源。商周域名的 SEO/AEO 權重，是其他平台難以複製的資產。</p>
+    </div>
+  </div>
+  <div class="highlight-quote">
+    <p>在商周這個已有三十年積累的媒體域名下，擁有一份結構化的企業履歷，其價值遠超企業自行建置網站的 SEO 投資。</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ PROJECT OVERVIEW ═══ -->
+<section id="overview">
+  <div class="section-label">專案概覽</div>
+  <h2>三大核心模組</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <h3>模組一｜企業履歷頁面</h3>
+      <p>AI 企業黃頁，整合官網、新聞稿、上市公開資料、商周報導自動生成。內容包含成立沿革、重要動態、品牌故事，<strong style="color:var(--gold-light)">中英雙語</strong>呈現，符合 SEO/AEO 標準。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🕸️</div>
+      <h3>模組二｜產業關聯圖譜</h3>
+      <p>視覺化呈現企業間的供應鏈上下游、策略聯盟、同產業群聚。動態互動式探索，為商周積累獨一無二的<strong style="color:var(--gold-light)">產業知識資產</strong>，構築長期競爭護城河。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <h3>模組三｜日不落台灣</h3>
+      <p>中英雙語同步，面向海外台商社群、國際採購商與投資人。英文版依國際讀者習慣重新組織內容架構，確保英語 AEO 環境中同樣具備<strong style="color:var(--gold-light)">搜尋優勢</strong>。</p>
+    </div>
+  </div>
+
+  <div style="margin-top: 48px;">
+    <h3 style="color:var(--white); font-size:1.2rem; margin-bottom:20px;">兩個啟動方向</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>比較維度</th>
+            <th>方向 A：世界新台商2000大</th>
+            <th>方向 B：企業探照燈（新興優先）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>企業範疇</td><td>上市上櫃企業為主</td><td>非上市中小型新興企業</td></tr>
+          <tr><td>付費意願</td><td>待驗證</td><td>預期轉換率較高</td></tr>
+          <tr><td>MVP 友善度</td><td>啟動複雜度高</td><td>適合快速驗證商業模式</td></tr>
+          <tr><td>合規風險</td><td>上市公司敏感度較高</td><td>彈性較高</td></tr>
+          <tr><td>建議</td><td colspan="2" style="color:var(--accent);">混合路徑：以方向B 作為 MVP，成功後擴展至方向A 規模</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ BUSINESS MODEL ═══ -->
+<section id="business">
+  <div class="section-label">商業模式</div>
+  <h2>Freemium 四層收入架構</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>服務層次</th>
+          <th>定價</th>
+          <th>收入性質</th>
+          <th>主要收益方</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--gold);">①</td>
+          <td><strong style="color:var(--light);">內容自動更新訂閱</strong><br><span style="font-size:0.8rem;">企業動態、新聞稿自動同步</span></td>
+          <td style="color:var(--gold-light);">3,000 元／月</td>
+          <td>訂閱制</td>
+          <td>商周 × 白馬AI 分潤</td>
+        </tr>
+        <tr>
+          <td style="color:var(--gold);">②</td>
+          <td><strong style="color:var(--light);">企業探照燈首次上架</strong><br><span style="font-size:0.8rem;">AI 生成完整企業履歷頁面</span></td>
+          <td style="color:var(--gold-light);">首次 15萬 + 年訂閱 3.6萬</td>
+          <td>一次性 + 年訂閱</td>
+          <td>商周 × 白馬AI 分潤</td>
+        </tr>
+        <tr>
+          <td style="color:var(--gold);">③</td>
+          <td><strong style="color:var(--light);">深度報導 × 延伸行銷</strong><br><span style="font-size:0.8rem;">採訪報導、紙本專題、CEO 人設打造</span></td>
+          <td style="color:var(--gold-light);">專案報價</td>
+          <td>專案制</td>
+          <td>商周主導</td>
+        </tr>
+        <tr>
+          <td style="color:var(--gold);">④</td>
+          <td><strong style="color:var(--light);">AI 企業數位發言人</strong><br><span style="font-size:0.8rem;">多國語言 AI 發言人，全天候品牌溝通</span></td>
+          <td style="color:var(--gold-light);">訂閱／專案制</td>
+          <td>訂閱 / 專案制</td>
+          <td>白馬AI 主導</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top: 40px;">
+    <h3 style="color:var(--white); font-size:1.2rem; margin-bottom:8px;">2026 年度收入預估</h3>
+    <p style="margin-bottom: 20px; font-size:0.85rem;">（MVP 100 家企業，Q3 起訂閱，層一 + 層二合計，約 6 個月運營）</p>
+    <div class="revenue-scenarios">
+      <div class="scenario conservative">
+        <div class="scenario-label">保守情境</div>
+        <div class="scenario-amount">63 萬</div>
+        <div class="scenario-desc">訂閱轉換率 10%<br>新上架企業 3 家</div>
+      </div>
+      <div class="scenario base">
+        <div class="scenario-label">基準情境</div>
+        <div class="scenario-amount">165 萬</div>
+        <div class="scenario-desc">訂閱轉換率 25%<br>新上架企業 8 家</div>
+      </div>
+      <div class="scenario optimistic">
+        <div class="scenario-label">樂觀情境</div>
+        <div class="scenario-amount">297 萬</div>
+        <div class="scenario-desc">訂閱轉換率 40%<br>新上架企業 15 家</div>
+      </div>
+    </div>
+    <p style="margin-top:12px; font-size:0.82rem; color:var(--slate);">※ 層三（深度報導）及層四（AI 發言人）收入未納入上表，實際總收入將高於此預估</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ TIMELINE ═══ -->
+<section id="timeline">
+  <div class="section-label">執行計劃</div>
+  <h2>四階段推進時程</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-phase">Phase 0｜2026年3–4月</div>
+      <div class="tl-title">共識確認</div>
+      <p>雙方確認啟動方向（A/B/混合）、技術規格與內容標準對齊、合約簽訂與分工確認。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Phase 1｜2026年4–6月</div>
+      <div class="tl-title">MVP 開發</div>
+      <p>AI 生成系統建置測試、首批企業名單確認（50–100 家）、內容生成與商周編輯審核、網站前端開發完成。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Phase 2｜2026年6–7月</div>
+      <div class="tl-title">上線宣傳</div>
+      <p>商周世界新台商專題正式上線、聯名新聞稿發稿、商周內廣導流啟動、執行長奕伶 Mega Talk 節目上線。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Phase 3｜2026年7–12月</div>
+      <div class="tl-title">商業化推廣</div>
+      <p>訂閱服務業務開發啟動、企業探照燈客戶開發、AI 創新百強徵件期間成果展示、第二波擴張規劃評估。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ STRATEGIC VALUE ═══ -->
+<section id="value">
+  <div class="section-label">策略價值</div>
+  <h2>對雙方的核心價值</h2>
+  <div class="value-grid">
+    <div style="grid-column: 1 / -1;">
+      <h3 style="color:var(--white); font-size:1.15rem; margin-bottom:16px;">對商業周刊</h3>
+    </div>
+    <div class="value-block">
+      <h3>① AI 示範領先媒體業</h3>
+      <p>與專業 AI 團隊合作，展現 AI 對媒體的加值潛力，建立商周在「AI 時代媒體轉型」的領導地位。</p>
+    </div>
+    <div class="value-block">
+      <h3>② 創造新訂閱業務線</h3>
+      <p>將 AI 能力直接轉化為可訂閱、可收費的新服務，跳脫「AI 等於降本增效」框架。</p>
+    </div>
+    <div class="value-block">
+      <h3>③ 共創共擔降低門檻</h3>
+      <p>與白馬AI 共同承擔開發成本，不需獨自承擔高額技術啟動費用，專案落地難度大幅降低。</p>
+    </div>
+    <div class="value-block">
+      <h3>④ 善用域名護城河</h3>
+      <p>商周品牌公信力、三十年媒體域名 SEO 積累，都是其他 AI 服務無法複製的資產——越早啟動，護城河越深。</p>
+    </div>
+  </div>
+  <div style="height: 32px;"></div>
+  <div class="value-grid">
+    <div style="grid-column: 1 / -1;">
+      <h3 style="color:var(--white); font-size:1.15rem; margin-bottom:16px;">對白馬AI</h3>
+    </div>
+    <div class="value-block accent-top">
+      <h3>① 旗艦示範案例</h3>
+      <p>以台灣最具影響力的財經媒體作為 showcase，向市場證明白馬AI 對 AI 內容產業的執行力。</p>
+    </div>
+    <div class="value-block accent-top">
+      <h3>② 500 萬元媒體放大器</h3>
+      <p>商周講自己的 AI 轉型故事，同時也在為白馬AI 定調、發聲，估計媒體整合效益超過 500 萬元。</p>
+    </div>
+    <div class="value-block accent-top">
+      <h3>③ 企業客戶業務漏斗</h3>
+      <p>每一家因商周平台感興趣的企業，都是白馬AI 的潛在客戶來源，形成持續業務漏斗。</p>
+    </div>
+    <div class="value-block accent-top">
+      <h3>④ 實際上線的商業模式</h3>
+      <p>不只是技術展示，而是實際上線、實際收費、實際運營的產品，兼具行銷展示與商業模式建立的雙重價值。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ NEXT STEPS ═══ -->
+<section id="next">
+  <div class="section-label">下一步行動</div>
+  <h2>四步驟啟動路徑</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>確認啟動方向</h3>
+      <p>雙方共同決定採取方向A、方向B 或混合路徑，確認第一批企業名單的選取原則與規模。</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>商周內部資源盤點</h3>
+      <p>確認專案負責人、編輯審核人力評估、域名技術環境、法務確認資料使用範疇。</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>合約框架討論</h3>
+      <p>確認各層服務分潤比例、報導授權範疇、作品著作權歸屬、合作期間與退出機制。</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>召開工作會議</h3>
+      <p>啟動方向確認、技術架構簡報、商周資源說明、首批企業名單討論、時程確認。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p style="font-size:1.1rem; color:var(--gold-light); margin-bottom:8px;">商周 × 白馬AI</p>
+  <p style="margin-bottom:4px;">本提案書由商業周刊 × 白馬AI 共同發起</p>
+  <p><strong>2026年3月</strong>｜聯名對外展示版本，如需進一步洽談請聯繫雙方窗口</p>
+</footer>
+
+</body>
+</html>
