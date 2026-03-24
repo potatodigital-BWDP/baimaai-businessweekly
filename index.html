@@ -8,38 +8,131 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --gold: #C8960C;
-      --gold-light: #F0C040;
-      --navy: #0A1628;
-      --navy-mid: #112240;
-      --navy-soft: #1A3357;
-      --slate: #8892B0;
-      --light: #CCD6F6;
-      --white: #E6F1FF;
-      --accent: #64FFDA;
+      --red: #D0021B;
+      --red-dark: #A80016;
+      --red-glow: rgba(208,2,27,0.15);
+      --black: #0D0D0D;
+      --black-mid: #1A1A1A;
+      --black-soft: #252525;
+      --black-card: #181818;
+      --gray: #888;
+      --gray-light: #AAAAAA;
+      --white: #FFFFFF;
+      --white-soft: #F0F0F0;
+      --white-dim: #CCCCCC;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
-      background: var(--navy);
-      color: var(--light);
+      background: var(--black);
+      color: var(--white-dim);
       line-height: 1.7;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(208,2,27,0.3);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+    }
+
+    .nav-logo {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .nav-logo span { color: var(--red); }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      color: var(--gray-light);
+      text-decoration: none;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+      background: var(--red-glow);
+    }
+
+    .nav-links a.active {
+      color: var(--red);
+    }
+
+    /* Hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--white);
+      transition: 0.3s;
+    }
+
+    @media (max-width: 760px) {
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 58px; left: 0; right: 0;
+        flex-direction: column;
+        background: var(--black-mid);
+        border-bottom: 1px solid rgba(208,2,27,0.3);
+        padding: 12px 0;
+        gap: 0;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 10px 24px; border-radius: 0; }
     }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
+      padding-top: 58px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 60px 24px;
+      padding-left: 24px;
+      padding-right: 24px;
       position: relative;
       overflow: hidden;
-      background: radial-gradient(ellipse at 50% 60%, #1a3357 0%, var(--navy) 70%);
+      background: radial-gradient(ellipse at 50% 55%, #2a0008 0%, var(--black) 65%);
     }
 
     .hero::before {
@@ -47,16 +140,16 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 30%, rgba(200,150,12,0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(100,255,218,0.05) 0%, transparent 50%);
+        radial-gradient(circle at 15% 25%, rgba(208,2,27,0.07) 0%, transparent 50%),
+        radial-gradient(circle at 85% 75%, rgba(208,2,27,0.04) 0%, transparent 50%);
     }
 
     .badge {
       display: inline-block;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
+      border: 1px solid var(--red);
+      color: var(--red);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
       padding: 6px 18px;
       border-radius: 50px;
       margin-bottom: 28px;
@@ -71,24 +164,26 @@
       margin-bottom: 12px;
     }
 
-    .hero h1 span { color: var(--gold-light); }
+    .hero h1 span { color: var(--red); }
 
     .hero .subtitle {
       font-size: clamp(1rem, 2.5vw, 1.3rem);
-      color: var(--slate);
+      color: var(--gray);
       max-width: 640px;
       margin: 0 auto 36px;
     }
 
     .hero .tagline {
-      font-size: clamp(0.95rem, 2vw, 1.1rem);
-      color: var(--accent);
+      font-size: clamp(0.92rem, 2vw, 1.05rem);
+      color: var(--white-dim);
       font-style: italic;
       max-width: 700px;
       margin: 0 auto 48px;
       padding: 16px 24px;
-      border-left: 3px solid var(--accent);
+      border-left: 3px solid var(--red);
       text-align: left;
+      background: rgba(208,2,27,0.05);
+      border-radius: 0 8px 8px 0;
     }
 
     .scroll-hint {
@@ -96,8 +191,8 @@
       bottom: 32px;
       left: 50%;
       transform: translateX(-50%);
-      color: var(--slate);
-      font-size: 0.78rem;
+      color: var(--gray);
+      font-size: 0.75rem;
       letter-spacing: 0.1em;
       display: flex;
       flex-direction: column;
@@ -107,19 +202,18 @@
     .scroll-hint::after {
       content: '';
       display: block;
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(to bottom, var(--slate), transparent);
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--gray), transparent);
     }
 
-    /* ── LAYOUT ── */
-    section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+    /* ── SECTIONS ── */
+    section { padding: 88px 24px; max-width: 1100px; margin: 0 auto; }
 
     .section-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--red);
       margin-bottom: 10px;
     }
 
@@ -127,85 +221,77 @@
       font-size: clamp(1.6rem, 3vw, 2.4rem);
       color: var(--white);
       margin-bottom: 36px;
-      position: relative;
     }
 
     h2::after {
       content: '';
       display: block;
-      width: 48px;
-      height: 3px;
-      background: var(--gold);
+      width: 40px; height: 3px;
+      background: var(--red);
       margin-top: 12px;
     }
 
     h3 {
-      font-size: 1.1rem;
-      color: var(--gold-light);
+      font-size: 1.05rem;
+      color: var(--white-soft);
       margin-bottom: 10px;
     }
 
-    p { color: var(--slate); margin-bottom: 14px; font-size: 0.97rem; }
+    p { color: var(--gray-light); margin-bottom: 14px; font-size: 0.96rem; }
 
     /* ── DIVIDER ── */
     .divider {
       border: none;
       height: 1px;
-      background: linear-gradient(to right, transparent, var(--navy-soft), transparent);
+      background: linear-gradient(to right, transparent, var(--black-soft), transparent);
       margin: 0 24px;
     }
 
-    /* ── CARDS GRID ── */
+    /* ── CARDS ── */
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      gap: 20px;
     }
 
     .card {
-      background: var(--navy-mid);
-      border: 1px solid var(--navy-soft);
-      border-radius: 12px;
+      background: var(--black-card);
+      border: 1px solid var(--black-soft);
+      border-radius: 10px;
       padding: 28px 24px;
       transition: border-color 0.25s, transform 0.25s;
     }
 
     .card:hover {
-      border-color: var(--gold);
+      border-color: var(--red);
       transform: translateY(-4px);
     }
 
-    .card-icon {
-      font-size: 1.8rem;
-      margin-bottom: 14px;
-    }
+    .card-icon { font-size: 1.7rem; margin-bottom: 14px; }
 
     /* ── TABLE ── */
     .table-wrap { overflow-x: auto; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
 
     th {
-      background: var(--navy-soft);
-      color: var(--gold-light);
+      background: var(--black-soft);
+      color: var(--white);
       padding: 12px 16px;
       text-align: left;
       font-weight: 600;
       white-space: nowrap;
+      border-bottom: 2px solid var(--red);
     }
 
     td {
       padding: 11px 16px;
-      color: var(--slate);
-      border-bottom: 1px solid rgba(100,120,180,0.15);
+      color: var(--gray-light);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(255,255,255,0.03); }
+    tr:hover td { background: rgba(208,2,27,0.04); }
 
     /* ── TIMELINE ── */
     .timeline { position: relative; padding-left: 32px; }
@@ -213,59 +299,50 @@
     .timeline::before {
       content: '';
       position: absolute;
-      left: 8px;
-      top: 0; bottom: 0;
+      left: 8px; top: 0; bottom: 0;
       width: 2px;
-      background: linear-gradient(to bottom, var(--gold), var(--accent));
+      background: linear-gradient(to bottom, var(--red), var(--black-soft));
     }
 
-    .tl-item {
-      position: relative;
-      margin-bottom: 32px;
-    }
+    .tl-item { position: relative; margin-bottom: 32px; }
 
     .tl-item::before {
       content: '';
       position: absolute;
-      left: -28px;
-      top: 6px;
+      left: -28px; top: 6px;
       width: 12px; height: 12px;
       border-radius: 50%;
-      background: var(--gold);
-      border: 2px solid var(--navy);
+      background: var(--red);
+      border: 2px solid var(--black);
     }
 
     .tl-phase {
       font-size: 0.7rem;
       letter-spacing: 0.15em;
-      color: var(--gold);
+      color: var(--red);
       text-transform: uppercase;
       margin-bottom: 4px;
     }
 
-    .tl-title {
-      font-size: 1.05rem;
-      color: var(--white);
-      margin-bottom: 6px;
-    }
+    .tl-title { font-size: 1.05rem; color: var(--white); margin-bottom: 6px; }
 
     /* ── VALUE BLOCKS ── */
     .value-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
     }
 
     .value-block {
-      background: var(--navy-mid);
+      background: var(--black-card);
       border-radius: 10px;
       padding: 24px;
-      border-top: 3px solid var(--gold);
+      border-top: 3px solid var(--red);
     }
 
-    .value-block.accent-top { border-top-color: var(--accent); }
+    .value-block.white-top { border-top-color: var(--white); }
 
-    /* ── REVENUE TABLE ── */
+    /* ── REVENUE ── */
     .revenue-scenarios {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -280,43 +357,34 @@
       border: 1px solid;
     }
 
-    .scenario.conservative { border-color: var(--slate); background: rgba(136,146,176,0.07); }
-    .scenario.base { border-color: var(--gold); background: rgba(200,150,12,0.08); }
-    .scenario.optimistic { border-color: var(--accent); background: rgba(100,255,218,0.06); }
+    .scenario.conservative { border-color: #555; background: rgba(255,255,255,0.03); }
+    .scenario.base { border-color: var(--red); background: var(--red-glow); }
+    .scenario.optimistic { border-color: #fff; background: rgba(255,255,255,0.04); }
 
     .scenario-label {
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-bottom: 10px;
     }
-    .conservative .scenario-label { color: var(--slate); }
-    .base .scenario-label { color: var(--gold); }
-    .optimistic .scenario-label { color: var(--accent); }
+    .conservative .scenario-label { color: var(--gray); }
+    .base .scenario-label { color: var(--red); }
+    .optimistic .scenario-label { color: var(--white); }
 
-    .scenario-amount {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--white);
-    }
-
-    .scenario-desc {
-      font-size: 0.8rem;
-      color: var(--slate);
-      margin-top: 6px;
-    }
+    .scenario-amount { font-size: 1.6rem; font-weight: 700; color: var(--white); }
+    .scenario-desc { font-size: 0.8rem; color: var(--gray); margin-top: 6px; }
 
     /* ── HIGHLIGHT QUOTE ── */
     .highlight-quote {
-      background: linear-gradient(135deg, rgba(200,150,12,0.1), rgba(100,255,218,0.05));
-      border-left: 4px solid var(--gold);
+      background: rgba(208,2,27,0.06);
+      border-left: 4px solid var(--red);
       border-radius: 0 10px 10px 0;
       padding: 24px 28px;
       margin: 32px 0;
     }
     .highlight-quote p {
       color: var(--white);
-      font-size: 1.05rem;
+      font-size: 1.03rem;
       font-style: italic;
       margin: 0;
     }
@@ -325,20 +393,15 @@
     .steps {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      gap: 18px;
     }
 
-    .step {
-      background: var(--navy-mid);
-      border-radius: 10px;
-      padding: 24px;
-      position: relative;
-    }
+    .step { background: var(--black-card); border-radius: 10px; padding: 24px; }
 
     .step-num {
       font-size: 2.5rem;
       font-weight: 800;
-      color: rgba(200,150,12,0.2);
+      color: rgba(208,2,27,0.2);
       line-height: 1;
       margin-bottom: 10px;
     }
@@ -347,15 +410,15 @@
 
     /* ── FOOTER ── */
     footer {
-      background: var(--navy-mid);
-      border-top: 1px solid var(--navy-soft);
+      background: var(--black-mid);
+      border-top: 1px solid var(--black-soft);
       text-align: center;
       padding: 40px 24px;
-      color: var(--slate);
+      color: var(--gray);
       font-size: 0.85rem;
     }
 
-    footer strong { color: var(--gold-light); }
+    footer strong { color: var(--white); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
@@ -366,8 +429,26 @@
 </head>
 <body>
 
+<!-- ═══ NAVBAR ═══ -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">商周 × <span>白馬AI</span></div>
+    <div class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#background">時代背景</a></li>
+      <li><a href="#overview">專案概覽</a></li>
+      <li><a href="#business">商業模式</a></li>
+      <li><a href="#timeline">執行時程</a></li>
+      <li><a href="#value">策略價值</a></li>
+      <li><a href="#next">下一步</a></li>
+    </ul>
+  </div>
+</nav>
+
 <!-- ═══ HERO ═══ -->
-<header class="hero">
+<header class="hero" id="hero">
   <div class="badge">2026 共創計劃提案書</div>
   <h1>商周 × 白馬AI<br><span>世界新台商企業探照燈</span></h1>
   <p class="subtitle">以 AI 的速度，商周的深度，讓台灣企業的故事在全球被找到</p>
@@ -413,17 +494,17 @@
     <div class="card">
       <div class="card-icon">📋</div>
       <h3>模組一｜企業履歷頁面</h3>
-      <p>AI 企業黃頁，整合官網、新聞稿、上市公開資料、商周報導自動生成。內容包含成立沿革、重要動態、品牌故事，<strong style="color:var(--gold-light)">中英雙語</strong>呈現，符合 SEO/AEO 標準。</p>
+      <p>AI 企業黃頁，整合官網、新聞稿、上市公開資料、商周報導自動生成。內容包含成立沿革、重要動態、品牌故事，<strong style="color:var(--white)">中英雙語</strong>呈現，符合 SEO/AEO 標準。</p>
     </div>
     <div class="card">
       <div class="card-icon">🕸️</div>
       <h3>模組二｜產業關聯圖譜</h3>
-      <p>視覺化呈現企業間的供應鏈上下游、策略聯盟、同產業群聚。動態互動式探索，為商周積累獨一無二的<strong style="color:var(--gold-light)">產業知識資產</strong>，構築長期競爭護城河。</p>
+      <p>視覺化呈現企業間的供應鏈上下游、策略聯盟、同產業群聚。動態互動式探索，為商周積累獨一無二的<strong style="color:var(--white)">產業知識資產</strong>，構築長期競爭護城河。</p>
     </div>
     <div class="card">
       <div class="card-icon">🌐</div>
       <h3>模組三｜日不落台灣</h3>
-      <p>中英雙語同步，面向海外台商社群、國際採購商與投資人。英文版依國際讀者習慣重新組織內容架構，確保英語 AEO 環境中同樣具備<strong style="color:var(--gold-light)">搜尋優勢</strong>。</p>
+      <p>中英雙語同步，面向海外台商社群、國際採購商與投資人。英文版依國際讀者習慣重新組織內容架構，確保英語 AEO 環境中同樣具備<strong style="color:var(--white)">搜尋優勢</strong>。</p>
     </div>
   </div>
 
@@ -443,7 +524,7 @@
           <tr><td>付費意願</td><td>待驗證</td><td>預期轉換率較高</td></tr>
           <tr><td>MVP 友善度</td><td>啟動複雜度高</td><td>適合快速驗證商業模式</td></tr>
           <tr><td>合規風險</td><td>上市公司敏感度較高</td><td>彈性較高</td></tr>
-          <tr><td>建議</td><td colspan="2" style="color:var(--accent);">混合路徑：以方向B 作為 MVP，成功後擴展至方向A 規模</td></tr>
+          <tr><td>建議</td><td colspan="2" style="color:var(--red);">混合路徑：以方向B 作為 MVP，成功後擴展至方向A 規模</td></tr>
         </tbody>
       </table>
     </div>
@@ -469,30 +550,30 @@
       </thead>
       <tbody>
         <tr>
-          <td style="color:var(--gold);">①</td>
-          <td><strong style="color:var(--light);">內容自動更新訂閱</strong><br><span style="font-size:0.8rem;">企業動態、新聞稿自動同步</span></td>
-          <td style="color:var(--gold-light);">3,000 元／月</td>
+          <td style="color:var(--red); font-weight:700;">①</td>
+          <td><strong style="color:var(--white);">內容自動更新訂閱</strong><br><span style="font-size:0.8rem;">企業動態、新聞稿自動同步</span></td>
+          <td style="color:var(--white);">3,000 元／月</td>
           <td>訂閱制</td>
           <td>商周 × 白馬AI 分潤</td>
         </tr>
         <tr>
-          <td style="color:var(--gold);">②</td>
-          <td><strong style="color:var(--light);">企業探照燈首次上架</strong><br><span style="font-size:0.8rem;">AI 生成完整企業履歷頁面</span></td>
-          <td style="color:var(--gold-light);">首次 15萬 + 年訂閱 3.6萬</td>
+          <td style="color:var(--red); font-weight:700;">②</td>
+          <td><strong style="color:var(--white);">企業探照燈首次上架</strong><br><span style="font-size:0.8rem;">AI 生成完整企業履歷頁面</span></td>
+          <td style="color:var(--white);">首次 15萬 + 年訂閱 3.6萬</td>
           <td>一次性 + 年訂閱</td>
           <td>商周 × 白馬AI 分潤</td>
         </tr>
         <tr>
-          <td style="color:var(--gold);">③</td>
-          <td><strong style="color:var(--light);">深度報導 × 延伸行銷</strong><br><span style="font-size:0.8rem;">採訪報導、紙本專題、CEO 人設打造</span></td>
-          <td style="color:var(--gold-light);">專案報價</td>
+          <td style="color:var(--red); font-weight:700;">③</td>
+          <td><strong style="color:var(--white);">深度報導 × 延伸行銷</strong><br><span style="font-size:0.8rem;">採訪報導、紙本專題、CEO 人設打造</span></td>
+          <td style="color:var(--white);">專案報價</td>
           <td>專案制</td>
           <td>商周主導</td>
         </tr>
         <tr>
-          <td style="color:var(--gold);">④</td>
-          <td><strong style="color:var(--light);">AI 企業數位發言人</strong><br><span style="font-size:0.8rem;">多國語言 AI 發言人，全天候品牌溝通</span></td>
-          <td style="color:var(--gold-light);">訂閱／專案制</td>
+          <td style="color:var(--red); font-weight:700;">④</td>
+          <td><strong style="color:var(--white);">AI 企業數位發言人</strong><br><span style="font-size:0.8rem;">多國語言 AI 發言人，全天候品牌溝通</span></td>
+          <td style="color:var(--white);">訂閱／專案制</td>
           <td>訂閱 / 專案制</td>
           <td>白馬AI 主導</td>
         </tr>
@@ -520,7 +601,7 @@
         <div class="scenario-desc">訂閱轉換率 40%<br>新上架企業 15 家</div>
       </div>
     </div>
-    <p style="margin-top:12px; font-size:0.82rem; color:var(--slate);">※ 層三（深度報導）及層四（AI 發言人）收入未納入上表，實際總收入將高於此預估</p>
+    <p style="margin-top:12px; font-size:0.82rem; color:var(--gray);">※ 層三（深度報導）及層四（AI 發言人）收入未納入上表，實際總收入將高於此預估</p>
   </div>
 </section>
 
@@ -586,19 +667,19 @@
     <div style="grid-column: 1 / -1;">
       <h3 style="color:var(--white); font-size:1.15rem; margin-bottom:16px;">對白馬AI</h3>
     </div>
-    <div class="value-block accent-top">
+    <div class="value-block white-top">
       <h3>① 旗艦示範案例</h3>
       <p>以台灣最具影響力的財經媒體作為 showcase，向市場證明白馬AI 對 AI 內容產業的執行力。</p>
     </div>
-    <div class="value-block accent-top">
+    <div class="value-block white-top">
       <h3>② 500 萬元媒體放大器</h3>
       <p>商周講自己的 AI 轉型故事，同時也在為白馬AI 定調、發聲，估計媒體整合效益超過 500 萬元。</p>
     </div>
-    <div class="value-block accent-top">
+    <div class="value-block white-top">
       <h3>③ 企業客戶業務漏斗</h3>
       <p>每一家因商周平台感興趣的企業，都是白馬AI 的潛在客戶來源，形成持續業務漏斗。</p>
     </div>
-    <div class="value-block accent-top">
+    <div class="value-block white-top">
       <h3>④ 實際上線的商業模式</h3>
       <p>不只是技術展示，而是實際上線、實際收費、實際運營的產品，兼具行銷展示與商業模式建立的雙重價值。</p>
     </div>
@@ -637,10 +718,28 @@
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
-  <p style="font-size:1.1rem; color:var(--gold-light); margin-bottom:8px;">商周 × 白馬AI</p>
+  <p style="font-size:1.1rem; color:var(--white); margin-bottom:8px;">商周 × 白馬AI</p>
   <p style="margin-bottom:4px;">本提案書由商業周刊 × 白馬AI 共同發起</p>
   <p><strong>2026年3月</strong>｜聯名對外展示版本，如需進一步洽談請聯繫雙方窗口</p>
 </footer>
+
+<script>
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('section[id], header[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
 
 </body>
 </html>
